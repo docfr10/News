@@ -5,7 +5,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
-import com.example.newsapplication.models.BottomNavItem
+import com.example.newsapplication.model.BottomNavItem
 
 object Constants {
     val BottomNavItems = listOf(
