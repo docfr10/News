@@ -1,20 +1,24 @@
 package com.example.newsapplication.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.newsapplication.ui.theme.Purple500
 
-//Разметка экрана профиля
+//Разметка экрана настроек
 @Composable
-fun ProfileScreen() {
+@Preview
+fun SettingsScreen() {
     // Column Composable,
     Column(
         modifier = Modifier
@@ -26,11 +30,11 @@ fun ProfileScreen() {
     ) {
         // Icon Composable
         Icon(
-            imageVector = Icons.Default.Person,
-            contentDescription = "profile",
+            imageVector = Icons.Default.Settings,
+            contentDescription = "settings",
             tint = Purple500
         )
         // Text to Display the current Screen
-        Text(text = "Profile", color = Color.Black)
+        Text(text = "Settings", color = Color.Black)
     }
 }

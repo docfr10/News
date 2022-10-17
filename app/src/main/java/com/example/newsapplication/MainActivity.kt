@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.newsapplication.screens.AboutScreen
 import com.example.newsapplication.screens.HomeScreen
 import com.example.newsapplication.screens.ProfileScreen
+import com.example.newsapplication.screens.SettingsScreen
 import com.example.newsapplication.ui.theme.NewsApplicationTheme
 import com.example.newsapplication.ui.theme.Purple700
 import com.example.newsapplication.utils.Constants
@@ -46,6 +47,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+//Навигация по экранам
 @Composable
 private fun NavHostContainer(
     navController: NavHostController,
@@ -66,13 +68,18 @@ private fun NavHostContainer(
             composable("profile") {
                 ProfileScreen()
             }
-            // route : search
+            // route : about
             composable("about") {
                 AboutScreen()
+            }
+            //route : settings
+            composable("settings") {
+                SettingsScreen()
             }
         })
 }
 
+//Вывод всех иконок экранов
 @Composable
 private fun BottomNavigationBar(navController: NavHostController) {
     BottomNavigation(
