@@ -1,5 +1,7 @@
 package com.example.newsapplication.screens
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -19,11 +21,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.newsapplication.ui.theme.Purple500
+import com.google.firebase.auth.FirebaseAuth
 
 //Разметка экрана профиля
 @Composable
-@Preview
-fun ProfileScreen() {
+fun ProfileScreen(auth: FirebaseAuth) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
 
@@ -51,7 +53,7 @@ fun ProfileScreen() {
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text(
-                    text = "Email address"
+                    text = "Email address", color = Color.Black
                 )
             },
             placeholder = { Text(text = "abc@domain.com") },
@@ -68,7 +70,7 @@ fun ProfileScreen() {
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text(
-                    text = "Password"
+                    text = "Password", color = Color.Black
                 )
             },
             singleLine = true,
@@ -80,6 +82,9 @@ fun ProfileScreen() {
         // Registration button
         Button(onClick = { /*TODO*/ }) { Text(text = "Registered") }
         // SignIn button
-        Button(onClick = { /*TODO*/ }) { Text(text = "Sign in") }
+        Button(onClick = {
+            // Вход авторизованного пользователя
+            auth.signInWithEmailAndPassword(email.value, password.value)
+        }) { Text(text = "Sign in") }
     }
 }

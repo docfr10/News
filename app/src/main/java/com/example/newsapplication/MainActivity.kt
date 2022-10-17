@@ -22,8 +22,11 @@ import com.example.newsapplication.screens.SettingsScreen
 import com.example.newsapplication.ui.theme.NewsApplicationTheme
 import com.example.newsapplication.ui.theme.Purple700
 import com.example.newsapplication.utils.Constants
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
+    private val auth = FirebaseAuth.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -38,7 +41,11 @@ class MainActivity : ComponentActivity() {
                         bottomBar = {
                             BottomNavigationBar(navController = navController)
                         }, content = { padding ->
-                            NavHostContainer(navController = navController, padding = padding)
+                            NavHostContainer(
+                                navController = navController,
+                                padding = padding,
+                                auth = auth
+                            )
                         }
                     )
                 }
@@ -51,7 +58,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun NavHostContainer(
     navController: NavHostController,
-    padding: PaddingValues
+    padding: PaddingValues,
+    auth: FirebaseAuth
 ) {
     NavHost(
         navController = navController,
@@ -66,7 +74,7 @@ private fun NavHostContainer(
             }
             // route : profile
             composable("profile") {
-                ProfileScreen()
+                ProfileScreen(auth = auth)
             }
             // route : about
             composable("about") {
