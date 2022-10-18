@@ -107,7 +107,11 @@ fun AuthenticationScreen(auth: FirebaseAuth) {
                         if (task.isSuccessful)
                             context.startActivity(Intent(context, MainActivity::class.java))
                         else
-                            Toast.makeText(context, "Please register", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "Please check that your email address and password are correct",
+                                Toast.LENGTH_SHORT
+                            ).show()
                     }
             } else {
                 Toast.makeText(
