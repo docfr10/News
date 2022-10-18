@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,7 +19,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.newsapplication.model.BottomNavItem
 import com.example.newsapplication.screens.*
 import com.example.newsapplication.ui.theme.NewsApplicationTheme
-import com.example.newsapplication.ui.theme.Purple700
 import com.example.newsapplication.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 
@@ -64,7 +62,7 @@ private fun Authentication(
 
 @Composable
 fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
-    Surface(color = Color.White) {
+    Surface(color = MaterialTheme.colors.surface) {
         // Scaffold Component
         Scaffold(
             // Bottom navigation
@@ -118,7 +116,7 @@ private fun NavHostContainer(
 fun BottomNavigationBar(navController: NavHostController) {
     BottomNavigation(
         // set background color
-        backgroundColor = Purple700
+        backgroundColor = MaterialTheme.colors.background
     ) {
         // observe the backstack
         val navBackStackEntry by navController.currentBackStackEntryAsState()

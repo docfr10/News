@@ -8,10 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.runtime.Composable
@@ -19,8 +16,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.newsapplication.MainActivity
@@ -37,7 +34,7 @@ fun AuthenticationScreen(auth: FirebaseAuth) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
+            .background(MaterialTheme.colors.background),
         // parameters set to place the items in center
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -49,18 +46,15 @@ fun AuthenticationScreen(auth: FirebaseAuth) {
             tint = Purple500
         )
         // Text to Display the current Screen
-        Text(text = "authentication", color = Color.Black)
+        Text(text = "Authentication", color = MaterialTheme.colors.onSurface)
         // OutlinedTextField to type the Email
         OutlinedTextField(
             value = email.value,
+            textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
             onValueChange = { newText -> email.value = newText },
             modifier = Modifier.fillMaxWidth(),
-            label = {
-                Text(
-                    text = "Email address", color = Color.Black
-                )
-            },
-            placeholder = { Text(text = "abc@domain.com") },
+            label = { Text(text = "Email address") },
+            placeholder = { Text(text = "abc@domain.com", color = MaterialTheme.colors.onSurface) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
@@ -70,13 +64,10 @@ fun AuthenticationScreen(auth: FirebaseAuth) {
         // OutlinedTextField to type the password
         OutlinedTextField(
             value = password.value,
+            textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
             onValueChange = { newText -> password.value = newText },
             modifier = Modifier.fillMaxWidth(),
-            label = {
-                Text(
-                    text = "Password", color = Color.Black
-                )
-            },
+            label = { Text(text = "Password") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
