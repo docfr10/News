@@ -1,6 +1,7 @@
 package com.example.newsapplication.screens
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -84,19 +85,46 @@ fun AuthenticationScreen(auth: FirebaseAuth) {
         )
         // Registration button
         Button(onClick = {
-            auth.createUserWithEmailAndPassword(
-                email.value,
-                password.value
-            )
+            if (email.value.isNotEmpty() && password.value.isNotEmpty()) {
+                auth.createUserWithEmailAndPassword(email.value, password.value)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful)
+                            Toast.makeText(
+                                context,
+                                "User successful authorized",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        else
+                            Toast.makeText(context, "User is already exist", Toast.LENGTH_SHORT)
+                                .show()
+                    }
+            } else {
+                Toast.makeText(
+                    context,
+                    "Please enter an email address and a password",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }) { Text(text = "Registered") }
         // SignIn button
         Button(onClick = {
             // Authorized user login
-            auth.signInWithEmailAndPassword(email.value, password.value)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful)
-                        context.startActivity(Intent(context, MainActivity::class.java))
-                }
+            if (email.value.isNotEmpty() && password.value.isNotEmpty()) {
+                auth.signInWithEmailAndPassword(email.value, password.value)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful)
+                            context.startActivity(Intent(context, MainActivity::class.java))
+                        else
+                            Toast.makeText(context, "Please register", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(
+                    context,
+                    "Please enter an email address and a password",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }) { Text(text = "Sign in") }
     }
 }
