@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.newsapplication.ui.theme.Purple500
 
 
 //Разметка экрана "О приложении"
@@ -29,12 +33,14 @@ fun AboutScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            modifier = Modifier.padding(20.dp),
-            text = "Связь с автором",
-            fontSize = 20.sp,
-            color = Color.Black
+        // Icon Composable
+        Icon(
+            imageVector = Icons.Filled.Info,
+            contentDescription = "profile",
+            tint = Purple500
         )
+        // Text to Display the current Screen
+        Text(text = "About", color = Color.Black)
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.SpaceEvenly,

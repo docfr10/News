@@ -1,12 +1,10 @@
 package com.example.newsapplication.utils
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import com.example.newsapplication.model.BottomNavItem
 
+// Объект, содержащий информацию о всех иконках BottomBar
 object Constants {
     val BottomNavItems = listOf(
         BottomNavItem(

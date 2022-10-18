@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -15,10 +17,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.newsapplication.screens.AboutScreen
-import com.example.newsapplication.screens.HomeScreen
-import com.example.newsapplication.screens.ProfileScreen
-import com.example.newsapplication.screens.SettingsScreen
+import com.example.newsapplication.model.BottomNavItem
+import com.example.newsapplication.screens.*
 import com.example.newsapplication.ui.theme.NewsApplicationTheme
 import com.example.newsapplication.ui.theme.Purple700
 import com.example.newsapplication.utils.Constants
@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
     private val auth = FirebaseAuth.getInstance()
-
+    private val cUser = auth.currentUser
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -34,32 +34,57 @@ class MainActivity : ComponentActivity() {
                 // remember navController so it does not
                 // get recreated on recomposition
                 val navController = rememberNavController()
-                Surface(color = Color.White) {
-                    // Scaffold Component
-                    Scaffold(
-                        // Bottom navigation
-                        bottomBar = {
-                            BottomNavigationBar(navController = navController)
-                        }, content = { padding ->
-                            NavHostContainer(
-                                navController = navController,
-                                padding = padding,
-                                auth = auth
-                            )
-                        }
-                    )
+
+                if (cUser == null)
+                    Authentication(navController = navController, auth = auth)
+                else {
+                    AppScreen(navController = navController)
                 }
             }
         }
     }
 }
 
-//Навигация по экранам
+// Переход на экран Аутентификации
+@Composable
+private fun Authentication(
+    navController: NavHostController,
+    auth: FirebaseAuth
+) {
+    BottomNavItem(
+        label = "Authentication",
+        icon = Icons.Filled.AccountCircle,
+        route = "authentication"
+    )
+    NavHost(navController = navController, startDestination = "authentication", builder = {
+        composable("authentication") {
+            AuthenticationScreen(auth = auth, navController = navController)
+        }
+    })
+}
+
+@Composable
+fun AppScreen(navController: NavHostController) {
+    Surface(color = Color.White) {
+        // Scaffold Component
+        Scaffold(
+            // Bottom navigation
+            bottomBar = { BottomNavigationBar(navController = navController) },
+            content = { padding ->
+                NavHostContainer(
+                    navController = navController,
+                    padding = padding,
+                )
+            }
+        )
+    }
+}
+
+// Навигация по экранам
 @Composable
 private fun NavHostContainer(
     navController: NavHostController,
     padding: PaddingValues,
-    auth: FirebaseAuth
 ) {
     NavHost(
         navController = navController,
@@ -74,7 +99,7 @@ private fun NavHostContainer(
             }
             // route : profile
             composable("profile") {
-                ProfileScreen(auth = auth)
+                ProfileScreen()
             }
             // route : about
             composable("about") {
@@ -87,9 +112,9 @@ private fun NavHostContainer(
         })
 }
 
-//Вывод всех иконок экранов
+// Вывод всех иконок экранов
 @Composable
-private fun BottomNavigationBar(navController: NavHostController) {
+fun BottomNavigationBar(navController: NavHostController) {
     BottomNavigation(
         // set background color
         backgroundColor = Purple700

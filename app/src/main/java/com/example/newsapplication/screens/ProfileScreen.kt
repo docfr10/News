@@ -1,7 +1,6 @@
 package com.example.newsapplication.screens
 
-import android.util.Log
-import android.widget.Toast
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -19,16 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.newsapplication.ui.theme.Purple500
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 
 //Разметка экрана профиля
 @Composable
-fun ProfileScreen(auth: FirebaseAuth) {
-    val email = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
-
+fun ProfileScreen() {
     // Column Composable,
     Column(
         modifier = Modifier
@@ -46,45 +42,5 @@ fun ProfileScreen(auth: FirebaseAuth) {
         )
         // Text to Display the current Screen
         Text(text = "Profile", color = Color.Black)
-        // OutlinedTextField to type the Email
-        OutlinedTextField(
-            value = email.value,
-            onValueChange = { newText -> email.value = newText },
-            modifier = Modifier.fillMaxWidth(),
-            label = {
-                Text(
-                    text = "Email address", color = Color.Black
-                )
-            },
-            placeholder = { Text(text = "abc@domain.com") },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next
-            )
-        )
-        // OutlinedTextField to type the password
-        OutlinedTextField(
-            value = password.value,
-            onValueChange = { newText -> password.value = newText },
-            modifier = Modifier.fillMaxWidth(),
-            label = {
-                Text(
-                    text = "Password", color = Color.Black
-                )
-            },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next
-            )
-        )
-        // Registration button
-        Button(onClick = { /*TODO*/ }) { Text(text = "Registered") }
-        // SignIn button
-        Button(onClick = {
-            // Вход авторизованного пользователя
-            auth.signInWithEmailAndPassword(email.value, password.value)
-        }) { Text(text = "Sign in") }
     }
 }
