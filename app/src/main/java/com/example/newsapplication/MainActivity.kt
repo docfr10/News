@@ -35,11 +35,10 @@ class MainActivity : ComponentActivity() {
                 // get recreated on recomposition
                 val navController = rememberNavController()
 
-                if (cUser == null)
+                if (cUser != null)
+                    AppScreen(navController = navController, auth = auth)
+                else
                     Authentication(navController = navController, auth = auth)
-                else {
-                    AppScreen(navController = navController)
-                }
             }
         }
     }
@@ -58,13 +57,13 @@ private fun Authentication(
     )
     NavHost(navController = navController, startDestination = "authentication", builder = {
         composable("authentication") {
-            AuthenticationScreen(auth = auth, navController = navController)
+            AuthenticationScreen(auth = auth)
         }
     })
 }
 
 @Composable
-fun AppScreen(navController: NavHostController) {
+fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
     Surface(color = Color.White) {
         // Scaffold Component
         Scaffold(
@@ -74,6 +73,7 @@ fun AppScreen(navController: NavHostController) {
                 NavHostContainer(
                     navController = navController,
                     padding = padding,
+                    auth = auth
                 )
             }
         )
@@ -85,6 +85,7 @@ fun AppScreen(navController: NavHostController) {
 private fun NavHostContainer(
     navController: NavHostController,
     padding: PaddingValues,
+    auth: FirebaseAuth,
 ) {
     NavHost(
         navController = navController,
@@ -99,7 +100,7 @@ private fun NavHostContainer(
             }
             // route : profile
             composable("profile") {
-                ProfileScreen()
+                ProfileScreen(auth = auth)
             }
             // route : about
             composable("about") {

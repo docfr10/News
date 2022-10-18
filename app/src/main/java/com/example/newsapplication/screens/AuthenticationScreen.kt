@@ -1,5 +1,6 @@
 package com.example.newsapplication.screens
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,16 +19,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.navigation.NavHostController
+import com.example.newsapplication.MainActivity
 import com.example.newsapplication.ui.theme.Purple500
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun AuthenticationScreen(auth: FirebaseAuth, navController: NavHostController) {
+fun AuthenticationScreen(auth: FirebaseAuth) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -89,6 +93,10 @@ fun AuthenticationScreen(auth: FirebaseAuth, navController: NavHostController) {
         Button(onClick = {
             // Authorized user login
             auth.signInWithEmailAndPassword(email.value, password.value)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful)
+                        context.startActivity(Intent(context, MainActivity::class.java))
+                }
         }) { Text(text = "Sign in") }
     }
 }
