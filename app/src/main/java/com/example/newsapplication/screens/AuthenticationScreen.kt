@@ -2,6 +2,7 @@ package com.example.newsapplication.screens
 
 import android.content.Intent
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -122,4 +123,6 @@ fun AuthenticationScreen(auth: FirebaseAuth) {
             }
         }) { Text(text = "Sign in") }
     }
+    // Запрет возврата к экрану Аутентификации
+    BackHandler(enabled = true) {}
 }

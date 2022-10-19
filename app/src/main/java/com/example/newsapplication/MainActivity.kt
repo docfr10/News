@@ -2,6 +2,7 @@ package com.example.newsapplication
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -33,10 +34,8 @@ class MainActivity : ComponentActivity() {
                 // get recreated on recomposition
                 val navController = rememberNavController()
 
-                if (cUser != null)
-                    AppScreen(navController = navController, auth = auth)
-                else
-                    Authentication(navController = navController, auth = auth)
+                if (cUser != null) AppScreen(navController = navController, auth = auth)
+                else Authentication(navController = navController, auth = auth)
             }
         }
     }
@@ -54,9 +53,7 @@ private fun Authentication(
         route = "authentication"
     )
     NavHost(navController = navController, startDestination = "authentication", builder = {
-        composable("authentication") {
-            AuthenticationScreen(auth = auth)
-        }
+        composable("authentication") { AuthenticationScreen(auth = auth) }
     })
 }
 
@@ -68,14 +65,13 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
             // Bottom navigation
             bottomBar = { BottomNavigationBar(navController = navController) },
             content = { padding ->
-                NavHostContainer(
-                    navController = navController,
-                    padding = padding,
-                    auth = auth
-                )
+                NavHostContainer(navController = navController, padding = padding, auth = auth)
             }
         )
     }
+
+    // Запрет возврата к экрану Аутентификации
+    BackHandler(enabled = true) {}
 }
 
 // Навигация по экранам
@@ -93,21 +89,13 @@ private fun NavHostContainer(
         modifier = Modifier.padding(paddingValues = padding),
         builder = {
             // route : Home
-            composable("home") {
-                HomeScreen()
-            }
+            composable("home") { HomeScreen() }
             // route : profile
-            composable("profile") {
-                ProfileScreen(auth = auth)
-            }
+            composable("profile") { ProfileScreen(auth = auth) }
             // route : about
-            composable("about") {
-                AboutScreen()
-            }
+            composable("about") { AboutScreen() }
             //route : settings
-            composable("settings") {
-                SettingsScreen()
-            }
+            composable("settings") { SettingsScreen() }
         })
 }
 
@@ -130,17 +118,11 @@ fun BottomNavigationBar(navController: NavHostController) {
                 // it currentRoute is equal then its selected route
                 selected = currentRoute == navItem.route,
                 // navigate on click
-                onClick = {
-                    navController.navigate(navItem.route)
-                },
+                onClick = { navController.navigate(navItem.route) },
                 // Icon of navItem
-                icon = {
-                    Icon(imageVector = navItem.icon, contentDescription = navItem.label)
-                },
+                icon = { Icon(imageVector = navItem.icon, contentDescription = navItem.label) },
                 // label
-                label = {
-                    Text(text = navItem.label)
-                },
+                label = { Text(text = navItem.label) },
                 alwaysShowLabel = false
             )
         }
