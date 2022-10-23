@@ -23,6 +23,7 @@ import com.example.newsapplication.ui.theme.NewsApplicationTheme
 import com.example.newsapplication.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 
+
 class MainActivity : ComponentActivity() {
     private val auth = FirebaseAuth.getInstance()
     private val cUser = auth.currentUser
@@ -65,7 +66,11 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
             // Bottom navigation
             bottomBar = { BottomNavigationBar(navController = navController) },
             content = { padding ->
-                NavHostContainer(navController = navController, padding = padding, auth = auth)
+                NavHostContainer(
+                    navController = navController,
+                    padding = padding,
+                    auth = auth
+                )
             }
         )
     }
