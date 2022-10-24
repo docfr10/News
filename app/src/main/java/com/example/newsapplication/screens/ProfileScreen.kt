@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.newsapplication.MainActivity
-import com.example.newsapplication.model.User
+import com.example.newsapplication.model.UserModel
 import com.example.newsapplication.ui.theme.Purple500
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
@@ -81,8 +81,13 @@ fun ProfileScreen(auth: FirebaseAuth) {
                 imeAction = ImeAction.Next
             )
         )
-
-        val user = User(id = cUser?.uid.toString(), interests = interests.value)
+        
+        val user = UserModel(
+            id = cUser?.uid.toString(),
+            email = cUser?.email.toString(),
+            interests = interests.value
+        )
+        // Button to write the information about user
         Button(onClick = {
             database.child("Users").child(user.id).setValue(user)
         }) { Text(text = "Add") }
