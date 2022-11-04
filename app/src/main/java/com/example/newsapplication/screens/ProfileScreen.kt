@@ -3,7 +3,6 @@ package com.example.newsapplication.screens
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,12 +11,10 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -37,7 +34,7 @@ fun ProfileScreen(auth: FirebaseAuth) {
     val context = LocalContext.current
 
     val touchCounter = remember { mutableStateOf(0) }
-    val interests = remember { mutableStateOf("") }
+    val interests = remember { mutableListOf<String>() }
 
     // Column Composable
     Column(
@@ -78,7 +75,7 @@ fun ProfileScreen(auth: FirebaseAuth) {
         val user = UserModel(
             id = cUser?.uid.toString(),
             email = cUser?.email.toString(),
-            interests = interests.value
+            interests = interests
         )
         // Button to write the information about user
         Button(onClick = {
@@ -88,7 +85,7 @@ fun ProfileScreen(auth: FirebaseAuth) {
 }
 
 @Composable
-fun MyInterests(interests: MutableState<String>, context: Context) {
+fun MyInterests(interests: MutableList<String>, context: Context) {
 
     // TODO Add touch effect on card
 
@@ -102,7 +99,7 @@ fun MyInterests(interests: MutableState<String>, context: Context) {
             text = stringResource(id = R.string.interest1),
             modifier = Modifier
                 .padding(10.dp)
-                .clickable { interests.value = context.getString(R.string.interest1) }
+                .clickable { interests.add(context.getString(R.string.interest1)) }
         )
     }
 
@@ -116,7 +113,7 @@ fun MyInterests(interests: MutableState<String>, context: Context) {
             text = stringResource(id = R.string.interest2),
             modifier = Modifier
                 .padding(10.dp)
-                .clickable { interests.value = context.getString(R.string.interest2) }
+                .clickable { interests.add(context.getString(R.string.interest2)) }
         )
     }
 
@@ -130,7 +127,7 @@ fun MyInterests(interests: MutableState<String>, context: Context) {
             text = stringResource(id = R.string.interest3),
             modifier = Modifier
                 .padding(10.dp)
-                .clickable { interests.value = context.getString(R.string.interest3) }
+                .clickable { interests.add(context.getString(R.string.interest3)) }
         )
     }
 }

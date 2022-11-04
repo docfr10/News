@@ -4,5 +4,5 @@ package com.example.newsapplication.model
 data class UserModel(
     val id: String,
     val email: String,
-    val interests: String
+    val interests: MutableList<String>
 )
