@@ -1,25 +1,28 @@
 package com.example.newsapplication.screens
 
+import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.newsapplication.MainActivity
+import com.example.newsapplication.R
 import com.example.newsapplication.model.UserModel
 import com.example.newsapplication.ui.theme.Purple500
 import com.google.firebase.auth.FirebaseAuth
@@ -70,18 +73,8 @@ fun ProfileScreen(auth: FirebaseAuth) {
         // Text to Display the current Screen
         Text(text = "You are logged in as: ${cUser?.email}")
         // Interests
-        OutlinedTextField(
-            value = interests.value,
-            textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
-            onValueChange = { newText -> interests.value = newText },
-            label = { Text(text = "Interests") },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next
-            )
-        )
-        
+        MyInterests(interests = interests, context = context)
+        // Add User Interests
         val user = UserModel(
             id = cUser?.uid.toString(),
             email = cUser?.email.toString(),
@@ -94,3 +87,50 @@ fun ProfileScreen(auth: FirebaseAuth) {
     }
 }
 
+@Composable
+fun MyInterests(interests: MutableState<String>, context: Context) {
+
+    // TODO Add touch effect on card
+
+    Card(
+        elevation = 10.dp,
+        shape = RoundedCornerShape(20.dp),
+        modifier = Modifier
+            .padding(10.dp)
+    ) {
+        Text(
+            text = stringResource(id = R.string.interest1),
+            modifier = Modifier
+                .padding(10.dp)
+                .clickable { interests.value = context.getString(R.string.interest1) }
+        )
+    }
+
+    Card(
+        elevation = 10.dp,
+        shape = RoundedCornerShape(20.dp),
+        modifier = Modifier
+            .padding(10.dp)
+    ) {
+        Text(
+            text = stringResource(id = R.string.interest2),
+            modifier = Modifier
+                .padding(10.dp)
+                .clickable { interests.value = context.getString(R.string.interest2) }
+        )
+    }
+
+    Card(
+        elevation = 10.dp,
+        shape = RoundedCornerShape(20.dp),
+        modifier = Modifier
+            .padding(10.dp)
+    ) {
+        Text(
+            text = stringResource(id = R.string.interest3),
+            modifier = Modifier
+                .padding(10.dp)
+                .clickable { interests.value = context.getString(R.string.interest3) }
+        )
+    }
+}

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">NewsApplication</string>
+    <string name="interest1">Interest 1</string>
+    <string name="interest2">Interest 2</string>
+    <string name="interest3">Interest 3</string>
 </resources>
