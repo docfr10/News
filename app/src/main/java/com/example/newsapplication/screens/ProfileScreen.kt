@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -87,19 +88,32 @@ fun ProfileScreen(auth: FirebaseAuth) {
 @Composable
 fun MyInterests(interests: MutableList<String>, context: Context) {
 
-    // TODO Add touch effect on card
+    val selectedColor1 = remember { mutableStateOf(false) }
+    val selectedColor2 = remember { mutableStateOf(false) }
+    val selectedColor3 = remember { mutableStateOf(false) }
+
+    val cardColor1 = if (selectedColor1.value) Color.Gray else Color.White
+    val cardColor2 = if (selectedColor2.value) Color.Gray else Color.White
+    val cardColor3 = if (selectedColor3.value) Color.Gray else Color.White
 
     Card(
         elevation = 10.dp,
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier
             .padding(10.dp)
+            .clickable {
+                if (!selectedColor1.value)
+                    interests.add(context.getString(R.string.interest1))
+                else
+                    interests.remove("Interest 1")
+                selectedColor1.value = !selectedColor1.value
+            },
+        backgroundColor = cardColor1
     ) {
         Text(
             text = stringResource(id = R.string.interest1),
             modifier = Modifier
                 .padding(10.dp)
-                .clickable { interests.add(context.getString(R.string.interest1)) }
         )
     }
 
@@ -108,12 +122,19 @@ fun MyInterests(interests: MutableList<String>, context: Context) {
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier
             .padding(10.dp)
+            .clickable {
+                if (!selectedColor2.value)
+                    interests.add(context.getString(R.string.interest2))
+                else
+                    interests.remove("Interest 2")
+                selectedColor2.value = !selectedColor2.value
+            },
+        backgroundColor = cardColor2
     ) {
         Text(
             text = stringResource(id = R.string.interest2),
             modifier = Modifier
                 .padding(10.dp)
-                .clickable { interests.add(context.getString(R.string.interest2)) }
         )
     }
 
@@ -122,12 +143,19 @@ fun MyInterests(interests: MutableList<String>, context: Context) {
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier
             .padding(10.dp)
+            .clickable {
+                if (!selectedColor3.value)
+                    interests.add(context.getString(R.string.interest3))
+                else
+                    interests.remove("Interest 3")
+                selectedColor3.value = !selectedColor3.value
+            },
+        backgroundColor = cardColor3
     ) {
         Text(
             text = stringResource(id = R.string.interest3),
             modifier = Modifier
                 .padding(10.dp)
-                .clickable { interests.add(context.getString(R.string.interest3)) }
         )
     }
 }
