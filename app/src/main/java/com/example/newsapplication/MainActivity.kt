@@ -35,8 +35,12 @@ class MainActivity : ComponentActivity() {
                 // get recreated on recomposition
                 val navController = rememberNavController()
 
-                if (cUser != null) AppScreen(navController = navController, auth = auth)
-                else Authentication(navController = navController, auth = auth)
+                if (cUser != null)
+                // Launch the app screen
+                    AppScreen(navController = navController, auth = auth)
+                else
+                // Launch the authentication screen
+                    Authentication(navController = navController, auth = auth)
             }
         }
     }

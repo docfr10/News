@@ -15,7 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -71,7 +70,9 @@ fun ProfileScreen(auth: FirebaseAuth) {
         // Text to Display the current Screen
         Text(text = "You are logged in as: ${cUser?.email}")
         // Interests
-        MyInterests(interests = interests, context = context)
+        Row() {
+            MyInterests(interests = interests, context = context)
+        }
         // Add User Interests
         val user = UserModel(
             id = cUser?.uid.toString(),
@@ -92,9 +93,12 @@ fun MyInterests(interests: MutableList<String>, context: Context) {
     val selectedColor2 = remember { mutableStateOf(false) }
     val selectedColor3 = remember { mutableStateOf(false) }
 
-    val cardColor1 = if (selectedColor1.value) Color.Gray else Color.White
-    val cardColor2 = if (selectedColor2.value) Color.Gray else Color.White
-    val cardColor3 = if (selectedColor3.value) Color.Gray else Color.White
+    val cardColor1 =
+        if (selectedColor1.value) MaterialTheme.colors.primary else MaterialTheme.colors.background
+    val cardColor2 =
+        if (selectedColor2.value) MaterialTheme.colors.primary else MaterialTheme.colors.background
+    val cardColor3 =
+        if (selectedColor3.value) MaterialTheme.colors.primary else MaterialTheme.colors.background
 
     Card(
         elevation = 10.dp,
@@ -112,6 +116,7 @@ fun MyInterests(interests: MutableList<String>, context: Context) {
     ) {
         Text(
             text = stringResource(id = R.string.interest1),
+            color = MaterialTheme.colors.onSurface,
             modifier = Modifier
                 .padding(10.dp)
         )
@@ -133,6 +138,7 @@ fun MyInterests(interests: MutableList<String>, context: Context) {
     ) {
         Text(
             text = stringResource(id = R.string.interest2),
+            color = MaterialTheme.colors.onSurface,
             modifier = Modifier
                 .padding(10.dp)
         )
@@ -154,6 +160,7 @@ fun MyInterests(interests: MutableList<String>, context: Context) {
     ) {
         Text(
             text = stringResource(id = R.string.interest3),
+            color = MaterialTheme.colors.onSurface,
             modifier = Modifier
                 .padding(10.dp)
         )
