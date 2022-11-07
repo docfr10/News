@@ -9,8 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -22,6 +21,8 @@ import com.example.newsapplication.screens.*
 import com.example.newsapplication.ui.theme.NewsApplicationTheme
 import com.example.newsapplication.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : ComponentActivity() {
@@ -64,6 +65,21 @@ private fun Authentication(
 
 @Composable
 fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
+    val database = Firebase.database.reference
+    val cUser = auth.currentUser
+
+    val selectedColor1 = remember { mutableStateOf(false) }
+    val selectedColor2 = remember { mutableStateOf(false) }
+    val selectedColor3 = remember { mutableStateOf(false) }
+
+    CheckTheInterests(
+        database = database,
+        cUser = cUser,
+        selectedColor1,
+        selectedColor2,
+        selectedColor3
+    )
+
     Surface(color = MaterialTheme.colors.surface) {
         // Scaffold Component
         Scaffold(
@@ -73,7 +89,10 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
                 NavHostContainer(
                     navController = navController,
                     padding = padding,
-                    auth = auth
+                    auth = auth,
+                    selectedColor1 = selectedColor1,
+                    selectedColor2 = selectedColor2,
+                    selectedColor3 = selectedColor3
                 )
             }
         )
@@ -89,6 +108,9 @@ private fun NavHostContainer(
     navController: NavHostController,
     padding: PaddingValues,
     auth: FirebaseAuth,
+    selectedColor1: MutableState<Boolean>,
+    selectedColor2: MutableState<Boolean>,
+    selectedColor3: MutableState<Boolean>
 ) {
     NavHost(
         navController = navController,
@@ -100,7 +122,14 @@ private fun NavHostContainer(
             // route : Home
             composable("home") { HomeScreen() }
             // route : profile
-            composable("profile") { ProfileScreen(auth = auth) }
+            composable("profile") {
+                ProfileScreen(
+                    auth = auth,
+                    selectedColor1 = selectedColor1,
+                    selectedColor2 = selectedColor2,
+                    selectedColor3 = selectedColor3
+                )
+            }
             // route : about
             composable("about") { AboutScreen() }
             //route : settings

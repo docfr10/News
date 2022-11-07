@@ -11,8 +11,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,18 +23,26 @@ import com.example.newsapplication.R
 import com.example.newsapplication.model.UserModel
 import com.example.newsapplication.ui.theme.Purple500
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import androidx.compose.runtime.remember as remember1
 
 //Разметка экрана профиля
 @Composable
-fun ProfileScreen(auth: FirebaseAuth) {
+fun ProfileScreen(
+    auth: FirebaseAuth,
+    selectedColor1: MutableState<Boolean>,
+    selectedColor2: MutableState<Boolean>,
+    selectedColor3: MutableState<Boolean>
+) {
     val database = Firebase.database.reference
     val cUser = auth.currentUser
     val context = LocalContext.current
 
-    val touchCounter = remember { mutableStateOf(0) }
-    val interests = remember { mutableListOf<String>() }
+    val touchCounter = remember1 { mutableStateOf(0) }
+    val interests = remember1 { mutableListOf<String>() }
 
     // Column Composable
     Column(
@@ -69,16 +77,22 @@ fun ProfileScreen(auth: FirebaseAuth) {
         )
         // Text to Display the current Screen
         Text(text = "You are logged in as: ${cUser?.email}")
-        // Interests
-        Row() {
-            MyInterests(interests = interests, context = context)
-        }
         // Add User Interests
         val user = UserModel(
             id = cUser?.uid.toString(),
             email = cUser?.email.toString(),
             interests = interests
         )
+        // Interests
+        Row {
+            MyInterests(
+                interests = interests,
+                context = context,
+                selectedColor1 = selectedColor1,
+                selectedColor2 = selectedColor2,
+                selectedColor3 = selectedColor3
+            )
+        }
         // Button to write the information about user
         Button(onClick = {
             database.child("Users").child(user.id).setValue(user)
@@ -87,11 +101,47 @@ fun ProfileScreen(auth: FirebaseAuth) {
 }
 
 @Composable
-fun MyInterests(interests: MutableList<String>, context: Context) {
+fun CheckTheInterests(
+    database: DatabaseReference,
+    cUser: FirebaseUser?,
+    selectedColor1: MutableState<Boolean>,
+    selectedColor2: MutableState<Boolean>,
+    selectedColor3: MutableState<Boolean>
+) {
+    database.child("Users").child(cUser!!.uid).child("interests").get().addOnSuccessListener {
+        when (it.value.toString()) {
+            "[Interest 1]" -> selectedColor1.value = true
+            "[Interest 2]" -> selectedColor2.value = true
+            "[Interest 3]" -> selectedColor3.value = true
+            "[Interest 1, Interest 2]" -> {
+                selectedColor1.value = true
+                selectedColor2.value = true
+            }
+            "[Interest 2, Interest 3]" -> {
+                selectedColor2.value = true
+                selectedColor3.value = true
+            }
+            "[Interest 1, Interest 3]" -> {
+                selectedColor1.value = true
+                selectedColor3.value = true
+            }
+            "[Interest 1, Interest 2, Interest 3]" -> {
+                selectedColor1.value = true
+                selectedColor2.value = true
+                selectedColor3.value = true
+            }
+        }
+    }
+}
 
-    val selectedColor1 = remember { mutableStateOf(false) }
-    val selectedColor2 = remember { mutableStateOf(false) }
-    val selectedColor3 = remember { mutableStateOf(false) }
+@Composable
+fun MyInterests(
+    interests: MutableList<String>,
+    context: Context,
+    selectedColor1: MutableState<Boolean>,
+    selectedColor2: MutableState<Boolean>,
+    selectedColor3: MutableState<Boolean>
+) {
 
     val cardColor1 =
         if (selectedColor1.value) MaterialTheme.colors.primary else MaterialTheme.colors.background
