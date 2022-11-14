@@ -72,6 +72,8 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
     val selectedColor2 = remember { mutableStateOf(false) }
     val selectedColor3 = remember { mutableStateOf(false) }
 
+    val isShowBottomBar = remember { mutableStateOf(false) }
+
     CheckTheInterests(
         database = database,
         cUser = cUser,
@@ -84,12 +86,13 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
         // Scaffold Component
         Scaffold(
             // Bottom navigation
-            bottomBar = { BottomNavigationBar(navController = navController) },
+            bottomBar = { if (isShowBottomBar.value) BottomNavigationBar(navController = navController) },
             content = { padding ->
                 NavHostContainer(
                     navController = navController,
                     padding = padding,
                     auth = auth,
+                    isShowBottomBar = isShowBottomBar,
                     selectedColor1 = selectedColor1,
                     selectedColor2 = selectedColor2,
                     selectedColor3 = selectedColor3
@@ -110,15 +113,23 @@ private fun NavHostContainer(
     auth: FirebaseAuth,
     selectedColor1: MutableState<Boolean>,
     selectedColor2: MutableState<Boolean>,
-    selectedColor3: MutableState<Boolean>
+    selectedColor3: MutableState<Boolean>,
+    isShowBottomBar: MutableState<Boolean>
 ) {
     NavHost(
         navController = navController,
         // set the start destination as home
-        startDestination = "home",
+        startDestination = "splashScreen",
         // Set the padding provided by scaffold
         modifier = Modifier.padding(paddingValues = padding),
         builder = {
+            // route : splash screen
+            composable("splashScreen") {
+                AnimatedSplashScreen(
+                    navController = navController,
+                    isShowBottomBar = isShowBottomBar
+                )
+            }
             // route : Home
             composable("home") { HomeScreen() }
             // route : profile
@@ -132,7 +143,7 @@ private fun NavHostContainer(
             }
             // route : about
             composable("about") { AboutScreen() }
-            //route : settings
+            // route : settings
             composable("settings") { SettingsScreen() }
         })
 }
