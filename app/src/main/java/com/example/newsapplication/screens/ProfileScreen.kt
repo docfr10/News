@@ -6,10 +6,9 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import com.example.newsapplication.MainActivity
 import com.example.newsapplication.R
 import com.example.newsapplication.model.UserModel
-import com.example.newsapplication.ui.theme.Purple500
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -48,7 +46,7 @@ fun ProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.background),
+            .background(MaterialTheme.colorScheme.background),
         // parameters set to place the items in center
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -57,23 +55,8 @@ fun ProfileScreen(
         Icon(
             imageVector = Icons.Default.Person,
             contentDescription = "profile",
-            tint = Purple500,
-            modifier = Modifier
-                .clickable {
-                    when (touchCounter.value) {
-                        0 -> {
-                            Toast
-                                .makeText(context, "Click again to log out", Toast.LENGTH_SHORT)
-                                .show()
-                            touchCounter.value++
-                        }
-                        1 -> {
-                            auth.signOut()
-                            context.startActivity(Intent(context, MainActivity::class.java))
-                        }
-                    }
-                }
-                .size(64.dp)
+            tint = MaterialTheme.colorScheme.surfaceTint,
+            modifier = Modifier.size(64.dp)
         )
         // Text to Display the current Screen
         Text(text = "You are logged in as: ${cUser?.email}")
@@ -97,6 +80,21 @@ fun ProfileScreen(
         Button(onClick = {
             database.child("Users").child(user.id).setValue(user)
         }) { Text(text = "Add") }
+        // Button to logout
+        Button(onClick = {
+            when (touchCounter.value) {
+                0 -> {
+                    Toast
+                        .makeText(context, "Click again to log out", Toast.LENGTH_SHORT)
+                        .show()
+                    touchCounter.value++
+                }
+                1 -> {
+                    auth.signOut()
+                    context.startActivity(Intent(context, MainActivity::class.java))
+                }
+            }
+        }) { Text(text = "Log out") }
     }
 }
 
@@ -144,15 +142,14 @@ fun MyInterests(
 ) {
 
     val cardColor1 =
-        if (selectedColor1.value) MaterialTheme.colors.primary else MaterialTheme.colors.background
+        if (selectedColor1.value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background
     val cardColor2 =
-        if (selectedColor2.value) MaterialTheme.colors.primary else MaterialTheme.colors.background
+        if (selectedColor2.value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background
     val cardColor3 =
-        if (selectedColor3.value) MaterialTheme.colors.primary else MaterialTheme.colors.background
+        if (selectedColor3.value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background
 
     Card(
-        elevation = 10.dp,
-        shape = RoundedCornerShape(20.dp),
+        shape = MaterialTheme.shapes.small,
         modifier = Modifier
             .padding(10.dp)
             .clickable {
@@ -162,19 +159,20 @@ fun MyInterests(
                     interests.remove("Interest 1")
                 selectedColor1.value = !selectedColor1.value
             },
-        backgroundColor = cardColor1
+        colors = CardDefaults.cardColors(
+            containerColor = cardColor1
+        )
     ) {
         Text(
             text = stringResource(id = R.string.interest1),
-            color = MaterialTheme.colors.onSurface,
+            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
                 .padding(10.dp)
         )
     }
 
     Card(
-        elevation = 10.dp,
-        shape = RoundedCornerShape(20.dp),
+        shape = MaterialTheme.shapes.small,
         modifier = Modifier
             .padding(10.dp)
             .clickable {
@@ -184,19 +182,20 @@ fun MyInterests(
                     interests.remove("Interest 2")
                 selectedColor2.value = !selectedColor2.value
             },
-        backgroundColor = cardColor2
+        colors = CardDefaults.cardColors(
+            containerColor = cardColor2
+        )
     ) {
         Text(
             text = stringResource(id = R.string.interest2),
-            color = MaterialTheme.colors.onSurface,
+            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
                 .padding(10.dp)
         )
     }
 
     Card(
-        elevation = 10.dp,
-        shape = RoundedCornerShape(20.dp),
+        shape = MaterialTheme.shapes.small,
         modifier = Modifier
             .padding(10.dp)
             .clickable {
@@ -206,11 +205,13 @@ fun MyInterests(
                     interests.remove("Interest 3")
                 selectedColor3.value = !selectedColor3.value
             },
-        backgroundColor = cardColor3
+        colors = CardDefaults.cardColors(
+            containerColor = cardColor3
+        )
     ) {
         Text(
             text = stringResource(id = R.string.interest3),
-            color = MaterialTheme.colors.onSurface,
+            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier
                 .padding(10.dp)
         )

@@ -4,12 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +20,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.newsapplication.ui.theme.Purple500
 
 
 //Разметка экрана "О приложении"
@@ -36,7 +35,7 @@ fun AboutScreen() {
         Icon(
             imageVector = Icons.Filled.Info,
             contentDescription = "profile",
-            tint = Purple500
+            tint = MaterialTheme.colorScheme.surfaceTint
         )
         // Text to Display the current Screen
         Text(text = "About")
@@ -60,8 +59,7 @@ private fun VKCard() {
             .fillMaxWidth()
             .clickable { uriHandler.openUri(uri = "https://vk.com/prikhodko_nk") }
             .padding(all = 5.dp),
-        shape = RoundedCornerShape(15.dp),
-        elevation = 5.dp
+        shape = MaterialTheme.shapes.medium,
     ) {
         Box {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -90,8 +88,7 @@ private fun TelegramCard() {
             .fillMaxWidth()
             .clickable { uriHandler.openUri(uri = "https://t.me/doc_fr10") }
             .padding(all = 5.dp),
-        shape = RoundedCornerShape(15.dp),
-        elevation = 5.dp
+        shape = MaterialTheme.shapes.medium
     ) {
         Box {
             Row(verticalAlignment = Alignment.CenterVertically) {

@@ -6,10 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +40,7 @@ fun AnimatedSplashScreen(navController: NavHostController, isShowBottomBar: Muta
 fun SplashScreen(alphaAnim: Float) {
     Box(
         modifier = Modifier
-            .background(MaterialTheme.colors.primary)
+            .background(MaterialTheme.colorScheme.primary)
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
@@ -50,7 +50,7 @@ fun SplashScreen(alphaAnim: Float) {
                 .alpha(alpha = alphaAnim),
             imageVector = Icons.Default.Info,
             contentDescription = "Logo icon",
-            tint = MaterialTheme.colors.background
+            tint = MaterialTheme.colorScheme.background
         )
     }
 }

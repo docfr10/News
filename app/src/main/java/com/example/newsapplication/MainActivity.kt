@@ -2,13 +2,13 @@ package com.example.newsapplication
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material3.*
+import androidx.compose.material3.BottomAppBarDefaults.containerColor
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -63,6 +63,7 @@ private fun Authentication(
     })
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
     val database = Firebase.database.reference
@@ -82,7 +83,7 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
         selectedColor3
     )
 
-    Surface(color = MaterialTheme.colors.surface) {
+    Surface(color = MaterialTheme.colorScheme.surface) {
         // Scaffold Component
         Scaffold(
             // Bottom navigation
@@ -102,7 +103,7 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
     }
 
     // Запрет возврата к экрану Аутентификации
-    BackHandler(enabled = true) {}
+    //BackHandler(enabled = true) {}
 }
 
 // Навигация по экранам
@@ -151,9 +152,11 @@ private fun NavHostContainer(
 // Вывод всех иконок экранов
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
-    BottomNavigation(
+    NavigationBar(
         // set background color
-        backgroundColor = MaterialTheme.colors.background
+        containerColor = NavigationBarDefaults.containerColor,
+        contentColor = MaterialTheme.colorScheme.contentColorFor(containerColor),
+        tonalElevation = NavigationBarDefaults.Elevation,
     ) {
         // observe the backstack
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -163,7 +166,7 @@ fun BottomNavigationBar(navController: NavHostController) {
         // Bottom nav items we declared
         Constants.BottomNavItems.forEach { navItem ->
             // Place the bottom nav items
-            BottomNavigationItem(
+            NavigationBarItem(
                 // it currentRoute is equal then its selected route
                 selected = currentRoute == navItem.route,
                 // navigate on click

@@ -2,16 +2,15 @@ package com.example.newsapplication.screens
 
 import android.content.Intent
 import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,9 +21,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.newsapplication.MainActivity
-import com.example.newsapplication.ui.theme.Purple500
 import com.google.firebase.auth.FirebaseAuth
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AuthenticationScreen(auth: FirebaseAuth) {
     val email = remember { mutableStateOf("") }
@@ -35,7 +34,7 @@ fun AuthenticationScreen(auth: FirebaseAuth) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.background),
+            .background(MaterialTheme.colorScheme.background),
         // parameters set to place the items in center
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -44,18 +43,23 @@ fun AuthenticationScreen(auth: FirebaseAuth) {
         Icon(
             imageVector = Icons.Default.AccountCircle,
             contentDescription = "authentication",
-            tint = Purple500
+            tint = MaterialTheme.colorScheme.surfaceTint
         )
         // Text to Display the current Screen
-        Text(text = "Authentication", color = MaterialTheme.colors.onSurface)
+        Text(text = "Authentication", color = MaterialTheme.colorScheme.onSurface)
         // OutlinedTextField to type the Email
         OutlinedTextField(
             value = email.value,
-            textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+            textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface),
             onValueChange = { newText -> email.value = newText },
             modifier = Modifier.fillMaxWidth(),
             label = { Text(text = "Email address") },
-            placeholder = { Text(text = "abc@domain.com", color = MaterialTheme.colors.onSurface) },
+            placeholder = {
+                Text(
+                    text = "abc@domain.com",
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
@@ -65,7 +69,7 @@ fun AuthenticationScreen(auth: FirebaseAuth) {
         // OutlinedTextField to type the password
         OutlinedTextField(
             value = password.value,
-            textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+            textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface),
             onValueChange = { newText -> password.value = newText },
             modifier = Modifier.fillMaxWidth(),
             label = { Text(text = "Password") },
@@ -124,5 +128,5 @@ fun AuthenticationScreen(auth: FirebaseAuth) {
         }) { Text(text = "Sign in") }
     }
     // Запрет возврата к экрану Аутентификации
-    BackHandler(enabled = true) {}
+    //BackHandler(enabled = true) {}
 }
