@@ -1,5 +1,6 @@
 package com.example.newsapplication
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.material3.BottomAppBarDefaults.containerColor
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,6 +26,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
+const val notificationID = 1
+const val channelID = "channel1"
+const val titleExtra = "titleExtra"
+const val messageExtra = "messageExtra"
 
 class MainActivity : ComponentActivity() {
     private val auth = FirebaseAuth.getInstance()
@@ -117,6 +123,9 @@ private fun NavHostContainer(
     selectedColor3: MutableState<Boolean>,
     isShowBottomBar: MutableState<Boolean>
 ) {
+    val activity = LocalContext.current as Activity
+    val context = LocalContext.current
+
     NavHost(
         navController = navController,
         // set the start destination as home
@@ -132,7 +141,7 @@ private fun NavHostContainer(
                 )
             }
             // route : Home
-            composable("home") { HomeScreen() }
+            composable("home") { HomeScreen(activity = activity, context = context) }
             // route : profile
             composable("profile") {
                 ProfileScreen(
