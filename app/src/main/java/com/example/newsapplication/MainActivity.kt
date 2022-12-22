@@ -13,6 +13,7 @@ import androidx.compose.material3.BottomAppBarDefaults.containerColor
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,6 +23,7 @@ import com.example.newsapplication.model.BottomNavItemModel
 import com.example.newsapplication.screens.*
 import com.example.newsapplication.ui.theme.NewsApplicationTheme
 import com.example.newsapplication.utils.Constants
+import com.example.newsapplication.viewmodel.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -32,19 +34,32 @@ const val titleExtra = "titleExtra"
 const val messageExtra = "messageExtra"
 
 class MainActivity : ComponentActivity() {
+    // Objects for working with Firebase
     private val auth = FirebaseAuth.getInstance()
     private val cUser = auth.currentUser
+
+    // ViewModel objects
+    private lateinit var homeViewModel: HomeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             NewsApplicationTheme {
+                val provider = ViewModelProvider(this)
+                homeViewModel = provider[HomeViewModel::class.java]
+
+
                 // remember navController so it does not
                 // get recreated on recomposition
                 val navController = rememberNavController()
 
                 if (cUser != null)
                 // Launch the app screen
-                    AppScreen(navController = navController, auth = auth)
+                    AppScreen(
+                        navController = navController,
+                        auth = auth,
+                        homeViewModel = homeViewModel
+                    )
                 else
                 // Launch the authentication screen
                     Authentication(navController = navController, auth = auth)
@@ -71,7 +86,7 @@ private fun Authentication(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
+fun AppScreen(navController: NavHostController, auth: FirebaseAuth, homeViewModel: HomeViewModel) {
     val database = Firebase.database.reference
     val cUser = auth.currentUser
 
@@ -99,6 +114,7 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth) {
                     navController = navController,
                     padding = padding,
                     auth = auth,
+                    homeViewModel = homeViewModel,
                     isShowBottomBar = isShowBottomBar,
                     selectedColor1 = selectedColor1,
                     selectedColor2 = selectedColor2,
@@ -121,7 +137,8 @@ private fun NavHostContainer(
     selectedColor1: MutableState<Boolean>,
     selectedColor2: MutableState<Boolean>,
     selectedColor3: MutableState<Boolean>,
-    isShowBottomBar: MutableState<Boolean>
+    isShowBottomBar: MutableState<Boolean>,
+    homeViewModel: HomeViewModel
 ) {
     val activity = LocalContext.current as Activity
     val context = LocalContext.current
@@ -141,7 +158,13 @@ private fun NavHostContainer(
                 )
             }
             // route : Home
-            composable("home") { HomeScreen(activity = activity, context = context) }
+            composable("home") {
+                HomeScreen(
+                    activity = activity,
+                    context = context,
+                    homeViewModel = homeViewModel
+                )
+            }
             // route : profile
             composable("profile") {
                 ProfileScreen(
