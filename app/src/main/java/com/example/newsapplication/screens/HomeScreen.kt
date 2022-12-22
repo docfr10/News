@@ -17,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.newsapplication.*
+import com.example.newsapplication.model.NotificationsModel
 
 
 //Разметка домашнего экрана
@@ -53,7 +54,7 @@ fun HomeScreen(activity: Activity, context: Context) {
 fun createNotifications(activity: Activity, context: Context) {
     val title = "Some title" //Название уведомления
     val message = "Some message" //Текст уведомления
-    val intent = Intent(context, Notifications::class.java)
+    val intent = Intent(context, NotificationsModel::class.java)
     //Записываем дату когда необходимо отправить уведомление
     val alarmManager =
         activity.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager

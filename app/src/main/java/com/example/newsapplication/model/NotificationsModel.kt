@@ -1,15 +1,15 @@
-package com.example.newsapplication
+package com.example.newsapplication.model
 
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.example.newsapplication.*
 
 //Класс, отвечающий за создание уведомлений
-class Notifications : BroadcastReceiver() {
+class NotificationsModel : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val intent1 = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -21,10 +21,8 @@ class Notifications : BroadcastReceiver() {
             .setContentTitle(intent.getStringExtra(titleExtra))
             .setContentText(intent.getStringExtra(messageExtra))
             .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
+            .setAutoCancel(false)
             .build()
-
-        Log.d("FFFFFFFFFFFFFFFF", "FFFFFFFFFFFFFFFFFff")
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(notificationID, notification)
