@@ -27,7 +27,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import androidx.compose.runtime.remember as remember1
 
-//Разметка экрана профиля
+// Markup of the "Profile" screen
 @Composable
 fun ProfileScreen(
     auth: FirebaseAuth,

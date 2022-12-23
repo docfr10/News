@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.newsapplication.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
+// ViewModel class of Authentication screen
 class AuthenticationViewModel : ViewModel() {
     fun checkRegistration(
         context: Context,

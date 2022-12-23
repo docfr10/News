@@ -13,22 +13,23 @@ import com.example.newsapplication.model.notifications.NotificationsModel
 import com.example.newsapplication.notificationID
 import com.example.newsapplication.titleExtra
 
+// ViewModel class of Home screen
 class HomeViewModel : ViewModel() {
     fun createNotifications(
         activity: Activity,
         context: Context,
         notificationText: MutableState<String>
     ) {
-        val title = "New notification" //Название уведомления
+        val title = "New notification" // Title of notification
         val intent = Intent(context, NotificationsModel::class.java)
-        //Записываем дату когда необходимо отправить уведомление
+        // Remembering the date when it is necessary to send a notification
         val alarmManager =
             activity.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
-        //Передаем название и текст уведомления в Notifications
+        // Passing the name and text of the notification to Notifications
         intent.putExtra(titleExtra, title)
         intent.putExtra(messageExtra, notificationText.value)
 
-        //Создаем широковещательный сигнал для отправки уведомления
+        // Creating a broadcast signal to send a notification
         val pendingIntent =
             PendingIntent.getBroadcast(
                 context,

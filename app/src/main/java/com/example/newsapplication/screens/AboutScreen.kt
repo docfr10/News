@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-//Разметка экрана "О приложении"
+// Markup of the "About the app" screen
 @Composable
 @Preview
 fun AboutScreen() {
@@ -43,9 +43,9 @@ fun AboutScreen() {
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            VKCard() //Карточка со ссылкой на ВК
-            TelegramCard() //Карточка со ссылкой на Telegram
-            //EmailCard() //Карточка со ссылкой на почту
+            VKCard() // A card with a link to the VK
+            TelegramCard() // A card with a link to the Telegram
+            //EmailCard() // A card with a link to the Mail
         }
     }
 }
@@ -72,7 +72,7 @@ private fun VKCard() {
                         .clip(CircleShape)
                 )
                 Text(
-                    text = "Вконтакте", fontSize = 20.sp,
+                    text = "VK", fontSize = 20.sp,
                 )
             }
         }

@@ -13,11 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.newsapplication.viewmodel.HomeViewModel
 
 
-//Разметка домашнего экрана
+// Markup of the "Home" screen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(activity: Activity, context: Context, homeViewModel: HomeViewModel) {
@@ -47,10 +48,11 @@ fun HomeScreen(activity: Activity, context: Context, homeViewModel: HomeViewMode
             onValueChange = { newText -> notificationText.value = newText },
             modifier = Modifier.fillMaxWidth(),
             label = { Text(text = "Type a notification text") },
-            singleLine = false,
+            singleLine = true,
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
+                keyboardType = KeyboardType.Text, // Keyboard type
+                capitalization = KeyboardCapitalization.Sentences, // Letters type
+                imeAction = ImeAction.Done // Keyboard action type
             )
         )
         // Button, to send notification

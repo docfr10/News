@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 
+// Splash Screen
 @Composable
 fun AnimatedSplashScreen(navController: NavHostController, isShowBottomBar: MutableState<Boolean>) {
     val startAnimation = remember { mutableStateOf(false) }

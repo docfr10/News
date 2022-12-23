@@ -74,7 +74,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// Переход на экран Аутентификации
+// Switching to the Authentication screen
 @Composable
 private fun Authentication(
     navController: NavHostController,
@@ -140,7 +140,7 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth, homeViewMode
     //BackHandler(enabled = true) {}
 }
 
-// Навигация по экранам
+// Screen Navigation
 @Composable
 private fun NavHostContainer(
     navController: NavHostController,
@@ -193,7 +193,7 @@ private fun NavHostContainer(
         })
 }
 
-// Вывод всех иконок экранов
+// Output of all screen icons
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     NavigationBar(

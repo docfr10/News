@@ -1,6 +1,6 @@
 package com.example.newsapplication.model.navigationbar
 
-// Дата класс, отвечающий за хранение данных о пользователях
+// Data class responsible for storing user data
 data class UserModel(
     val id: String,
     val email: String,

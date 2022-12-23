@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
-//Разметка экрана настроек
+// Layout of the settings screen
 @Composable
 @Preview
 fun SettingsScreen() {

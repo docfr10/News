@@ -8,7 +8,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.example.newsapplication.*
 
-//Класс, отвечающий за создание уведомлений
+// Class responsible for creating notifications
 class NotificationsModel : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val intent1 = Intent(context, MainActivity::class.java).apply {
