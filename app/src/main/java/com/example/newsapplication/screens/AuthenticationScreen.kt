@@ -1,7 +1,5 @@
 package com.example.newsapplication.screens
 
-import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,12 +18,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import com.example.newsapplication.MainActivity
+import com.example.newsapplication.viewmodel.AuthenticationViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthenticationScreen(auth: FirebaseAuth) {
+fun AuthenticationScreen(auth: FirebaseAuth, authenticationViewModel: AuthenticationViewModel) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
 
@@ -81,50 +79,21 @@ fun AuthenticationScreen(auth: FirebaseAuth) {
         )
         // Registration button
         Button(onClick = {
-            if (email.value.isNotEmpty() && password.value.isNotEmpty()) {
-                auth.createUserWithEmailAndPassword(email.value, password.value)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful)
-                            Toast.makeText(
-                                context,
-                                "User successful authorized",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        else
-                            Toast.makeText(context, "User is already exist", Toast.LENGTH_SHORT)
-                                .show()
-                    }
-            } else {
-                Toast.makeText(
-                    context,
-                    "Please enter an email address and a password",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            // Check the registration
+            authenticationViewModel.checkRegistration(
+                context = context,
+                auth = auth,
+                email = email,
+                password = password
+            )
         }) { Text(text = "Registered") }
         // SignIn button
         Button(onClick = {
             // Authorized user login
-            if (email.value.isNotEmpty() && password.value.isNotEmpty()) {
-                auth.signInWithEmailAndPassword(email.value, password.value)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful)
-                            context.startActivity(Intent(context, MainActivity::class.java))
-                        else
-                            Toast.makeText(
-                                context,
-                                "Please check that your email address and password are correct",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                    }
-            } else {
-                Toast.makeText(
-                    context,
-                    "Please enter an email address and a password",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            authenticationViewModel.checkAuthorized(context = context,
+                auth = auth,
+                email = email,
+                password = password)
         }) { Text(text = "Sign in") }
     }
     // Запрет возврата к экрану Аутентификации

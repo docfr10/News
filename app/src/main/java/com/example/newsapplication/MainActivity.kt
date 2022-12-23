@@ -23,6 +23,7 @@ import com.example.newsapplication.model.BottomNavItemModel
 import com.example.newsapplication.screens.*
 import com.example.newsapplication.ui.theme.NewsApplicationTheme
 import com.example.newsapplication.utils.Constants
+import com.example.newsapplication.viewmodel.AuthenticationViewModel
 import com.example.newsapplication.viewmodel.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity() {
 
     // ViewModel objects
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var authenticationViewModel: AuthenticationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +49,7 @@ class MainActivity : ComponentActivity() {
             NewsApplicationTheme {
                 val provider = ViewModelProvider(this)
                 homeViewModel = provider[HomeViewModel::class.java]
-
+                authenticationViewModel = provider[AuthenticationViewModel::class.java]
 
                 // remember navController so it does not
                 // get recreated on recomposition
@@ -58,11 +60,15 @@ class MainActivity : ComponentActivity() {
                     AppScreen(
                         navController = navController,
                         auth = auth,
-                        homeViewModel = homeViewModel
+                        homeViewModel = homeViewModel,
                     )
                 else
                 // Launch the authentication screen
-                    Authentication(navController = navController, auth = auth)
+                    Authentication(
+                        navController = navController,
+                        authenticationViewModel = authenticationViewModel,
+                        auth = auth
+                    )
             }
         }
     }
@@ -72,7 +78,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun Authentication(
     navController: NavHostController,
-    auth: FirebaseAuth
+    auth: FirebaseAuth,
+    authenticationViewModel: AuthenticationViewModel
 ) {
     BottomNavItemModel(
         label = "Authentication",
@@ -80,7 +87,12 @@ private fun Authentication(
         route = "authentication"
     )
     NavHost(navController = navController, startDestination = "authentication", builder = {
-        composable("authentication") { AuthenticationScreen(auth = auth) }
+        composable("authentication") {
+            AuthenticationScreen(
+                authenticationViewModel = authenticationViewModel,
+                auth = auth
+            )
+        }
     })
 }
 
