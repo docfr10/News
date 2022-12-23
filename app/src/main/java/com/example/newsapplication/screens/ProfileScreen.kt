@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.newsapplication.MainActivity
 import com.example.newsapplication.R
-import com.example.newsapplication.model.UserModel
+import com.example.newsapplication.model.navigationbar.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference

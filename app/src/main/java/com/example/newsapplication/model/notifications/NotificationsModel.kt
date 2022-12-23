@@ -1,4 +1,4 @@
-package com.example.newsapplication.model
+package com.example.newsapplication.model.notifications
 
 import android.app.NotificationManager
 import android.app.PendingIntent

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.example.newsapplication.channelID
 import com.example.newsapplication.messageExtra
-import com.example.newsapplication.model.NotificationsModel
+import com.example.newsapplication.model.notifications.NotificationsModel
 import com.example.newsapplication.notificationID
 import com.example.newsapplication.titleExtra
 

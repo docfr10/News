@@ -2,7 +2,7 @@ package com.example.newsapplication.utils
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import com.example.newsapplication.model.BottomNavItemModel
+import com.example.newsapplication.model.navigationbar.BottomNavItemModel
 
 // Объект, содержащий информацию о всех иконках BottomBar
 object Constants {
