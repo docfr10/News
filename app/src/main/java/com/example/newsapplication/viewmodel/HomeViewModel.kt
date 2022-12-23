@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import com.example.newsapplication.channelID
 import com.example.newsapplication.messageExtra
@@ -13,16 +14,19 @@ import com.example.newsapplication.notificationID
 import com.example.newsapplication.titleExtra
 
 class HomeViewModel : ViewModel() {
-    fun createNotifications(activity: Activity, context: Context) {
-        val title = "Some title" //Название уведомления
-        val message = "Some message" //Текст уведомления
+    fun createNotifications(
+        activity: Activity,
+        context: Context,
+        notificationText: MutableState<String>
+    ) {
+        val title = "New notification" //Название уведомления
         val intent = Intent(context, NotificationsModel::class.java)
         //Записываем дату когда необходимо отправить уведомление
         val alarmManager =
             activity.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
         //Передаем название и текст уведомления в Notifications
         intent.putExtra(titleExtra, title)
-        intent.putExtra(messageExtra, message)
+        intent.putExtra(messageExtra, notificationText.value)
 
         //Создаем широковещательный сигнал для отправки уведомления
         val pendingIntent =

@@ -73,7 +73,7 @@ fun AuthenticationScreen(auth: FirebaseAuth, authenticationViewModel: Authentica
             label = { Text(text = "Password") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
+                keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Next
             )
         )
@@ -90,10 +90,12 @@ fun AuthenticationScreen(auth: FirebaseAuth, authenticationViewModel: Authentica
         // SignIn button
         Button(onClick = {
             // Authorized user login
-            authenticationViewModel.checkAuthorized(context = context,
+            authenticationViewModel.checkAuthorized(
+                context = context,
                 auth = auth,
                 email = email,
-                password = password)
+                password = password
+            )
         }) { Text(text = "Sign in") }
     }
     // Запрет возврата к экрану Аутентификации
