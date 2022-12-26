@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.newsapplication.*
 
@@ -16,15 +17,17 @@ class NotificationsModel : BroadcastReceiver() {
         }
         val pendingIntent =
             PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_IMMUTABLE)
-        val notification = NotificationCompat.Builder(context, channelID)
+        val notification = NotificationCompat.Builder(context, R.string.channelID.toString())
             .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setContentTitle(intent.getStringExtra(titleExtra))
-            .setContentText(intent.getStringExtra(messageExtra))
+            .setContentTitle(intent.getStringExtra(R.string.titleExtra.toString()))
+            .setContentText(intent.getStringExtra(R.string.messageExtra.toString()))
             .setContentIntent(pendingIntent)
             .setAutoCancel(false)
             .build()
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(notificationID, notification)
+
+        notificationID++
     }
 }

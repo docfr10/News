@@ -3,4 +3,7 @@
     <string name="interest1">Interest 1</string>
     <string name="interest2">Interest 2</string>
     <string name="interest3">Interest 3</string>
+    <string name="channelID">Channel 1</string>
+    <string name="titleExtra">Title Extra</string>
+    <string name="messageExtra">Message Extra</string>
 </resources>

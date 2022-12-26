@@ -7,11 +7,9 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
-import com.example.newsapplication.channelID
-import com.example.newsapplication.messageExtra
+import com.example.newsapplication.R
 import com.example.newsapplication.model.notifications.NotificationsModel
 import com.example.newsapplication.notificationID
-import com.example.newsapplication.titleExtra
 
 // ViewModel class of Home screen
 class HomeViewModel : ViewModel() {
@@ -26,8 +24,8 @@ class HomeViewModel : ViewModel() {
         val alarmManager =
             activity.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
         // Passing the name and text of the notification to Notifications
-        intent.putExtra(titleExtra, title)
-        intent.putExtra(messageExtra, notificationText.value)
+        intent.putExtra(R.string.titleExtra.toString(), title)
+        intent.putExtra(R.string.messageExtra.toString(), notificationText.value)
 
         // Creating a broadcast signal to send a notification
         val pendingIntent =
@@ -57,7 +55,7 @@ class HomeViewModel : ViewModel() {
             TODO("VERSION.SDK_INT < N")
         }
         val channel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel(channelID, name, importance)
+            NotificationChannel(R.string.channelID.toString(), name, importance)
         } else {
             TODO("VERSION.SDK_INT < O")
         }
