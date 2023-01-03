@@ -9,7 +9,7 @@ import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import com.example.newsapplication.R
 import com.example.newsapplication.model.notifications.NotificationsModel
-import com.example.newsapplication.notificationID
+import com.example.newsapplication.model.notifications.notificationID
 
 // ViewModel class of Home screen
 class HomeViewModel : ViewModel() {

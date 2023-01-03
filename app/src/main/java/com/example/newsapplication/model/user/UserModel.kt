@@ -1,4 +1,4 @@
-package com.example.newsapplication.model.navigationbar
+package com.example.newsapplication.model.user
 
 // Data class responsible for storing user data
 data class UserModel(

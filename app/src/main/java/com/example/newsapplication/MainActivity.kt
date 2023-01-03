@@ -29,8 +29,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-var notificationID = 1
-
 class MainActivity : ComponentActivity() {
     // Objects for working with Firebase
     private val auth = FirebaseAuth.getInstance()

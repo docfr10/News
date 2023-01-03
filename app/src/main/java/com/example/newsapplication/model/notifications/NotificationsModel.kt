@@ -5,9 +5,11 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.newsapplication.*
+
+// Defining the notification ID like a current time
+var notificationID = System.currentTimeMillis().toInt()
 
 // Class responsible for creating notifications
 class NotificationsModel : BroadcastReceiver() {
@@ -31,8 +33,5 @@ class NotificationsModel : BroadcastReceiver() {
         // Sending a notification to a channel
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(notificationID, notification)
-
-        // Change the notificationID for the new notification
-        notificationID++
     }
 }
