@@ -94,23 +94,8 @@ private fun Authentication(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScreen(navController: NavHostController, auth: FirebaseAuth, homeViewModel: HomeViewModel) {
-    val database = Firebase.database.reference
-    val cUser = auth.currentUser
-
-    val selectedColor1 = remember { mutableStateOf(false) }
-    val selectedColor2 = remember { mutableStateOf(false) }
-    val selectedColor3 = remember { mutableStateOf(false) }
-
     // Hide bottom bar
     val isShowBottomBar = remember { mutableStateOf(false) }
-
-    CheckTheInterests(
-        database = database,
-        cUser = cUser,
-        selectedColor1,
-        selectedColor2,
-        selectedColor3
-    )
 
     Surface(color = MaterialTheme.colorScheme.surface) {
         // Scaffold Component
@@ -123,10 +108,7 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth, homeViewMode
                     padding = padding,
                     auth = auth,
                     homeViewModel = homeViewModel,
-                    isShowBottomBar = isShowBottomBar,
-                    selectedColor1 = selectedColor1,
-                    selectedColor2 = selectedColor2,
-                    selectedColor3 = selectedColor3
+                    isShowBottomBar = isShowBottomBar
                 )
             }
         )
@@ -143,9 +125,6 @@ private fun NavHostContainer(
     navController: NavHostController,
     padding: PaddingValues,
     auth: FirebaseAuth,
-    selectedColor1: MutableState<Boolean>,
-    selectedColor2: MutableState<Boolean>,
-    selectedColor3: MutableState<Boolean>,
     isShowBottomBar: MutableState<Boolean>,
     homeViewModel: HomeViewModel
 ) {
@@ -172,18 +151,11 @@ private fun NavHostContainer(
                     isShowBottomBar = isShowBottomBar
                 )
             }
-            // route : profile
-            composable("profile") {
-                ProfileScreen(
-                    auth = auth,
-                    selectedColor1 = selectedColor1,
-                    selectedColor2 = selectedColor2,
-                    selectedColor3 = selectedColor3
-                )
-            }
-            // route : about
+            // route : Profile
+            composable("profile") { ProfileScreen(auth = auth) }
+            // route : About
             composable("about") { AboutScreen() }
-            // route : settings
+            // route : Settings
             composable("settings") { SettingsScreen() }
         })
 }

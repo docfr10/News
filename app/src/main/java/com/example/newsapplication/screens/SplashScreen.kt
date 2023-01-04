@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
@@ -48,7 +48,7 @@ fun SplashScreen(alphaAnim: Float) {
             modifier = Modifier
                 .size(120.dp)
                 .alpha(alpha = alphaAnim),
-            imageVector = Icons.Default.Info,
+            imageVector = Icons.Default.Notifications,
             contentDescription = "Logo icon",
             tint = MaterialTheme.colorScheme.primary
         )
