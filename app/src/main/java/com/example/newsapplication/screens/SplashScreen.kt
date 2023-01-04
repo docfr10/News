@@ -41,7 +41,7 @@ fun AnimatedSplashScreen(navController: NavHostController, isShowBottomBar: Muta
 fun SplashScreen(alphaAnim: Float) {
     Box(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.primary)
+            .background(MaterialTheme.colorScheme.background)
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
@@ -51,7 +51,7 @@ fun SplashScreen(alphaAnim: Float) {
                 .alpha(alpha = alphaAnim),
             imageVector = Icons.Default.Info,
             contentDescription = "Logo icon",
-            tint = MaterialTheme.colorScheme.background
+            tint = MaterialTheme.colorScheme.primary
         )
     }
 }
