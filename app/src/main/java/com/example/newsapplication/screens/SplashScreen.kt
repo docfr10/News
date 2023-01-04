@@ -20,7 +20,7 @@ import kotlinx.coroutines.delay
 
 // Splash Screen
 @Composable
-fun AnimatedSplashScreen(navController: NavHostController, isShowBottomBar: MutableState<Boolean>) {
+fun AnimatedSplashScreen(navController: NavHostController) {
     val startAnimation = remember { mutableStateOf(false) }
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnimation.value) 1f else 0f,
@@ -32,7 +32,6 @@ fun AnimatedSplashScreen(navController: NavHostController, isShowBottomBar: Muta
         delay(4000)
         navController.popBackStack()
         navController.navigate("home")
-        isShowBottomBar.value = true
     }
     SplashScreen(alphaAnim = alphaAnim.value)
 }

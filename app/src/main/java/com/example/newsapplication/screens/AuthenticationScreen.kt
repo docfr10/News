@@ -98,6 +98,7 @@ fun AuthenticationScreen(auth: FirebaseAuth, authenticationViewModel: Authentica
             )
         }) { Text(text = "Sign in") }
     }
+    // TODO - Fix
     // Запрет возврата к экрану Аутентификации
     //BackHandler(enabled = true) {}
 }

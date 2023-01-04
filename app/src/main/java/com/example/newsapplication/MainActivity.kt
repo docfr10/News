@@ -46,8 +46,8 @@ class MainActivity : ComponentActivity() {
                 homeViewModel = provider[HomeViewModel::class.java]
                 authenticationViewModel = provider[AuthenticationViewModel::class.java]
 
-                // remember navController so it does not
-                // get recreated on recomposition
+                // Remember navController so it does not
+                // Get recreated on recomposition
                 val navController = rememberNavController()
 
                 if (cUser != null)
@@ -101,6 +101,7 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth, homeViewMode
     val selectedColor2 = remember { mutableStateOf(false) }
     val selectedColor3 = remember { mutableStateOf(false) }
 
+    // Hide bottom bar
     val isShowBottomBar = remember { mutableStateOf(false) }
 
     CheckTheInterests(
@@ -131,6 +132,7 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth, homeViewMode
         )
     }
 
+    // TODO - Fix
     // Запрет возврата к экрану Аутентификации
     //BackHandler(enabled = true) {}
 }
@@ -152,24 +154,22 @@ private fun NavHostContainer(
 
     NavHost(
         navController = navController,
-        // set the start destination as home
+        // Set the start destination as splash screen
         startDestination = "splashScreen",
         // Set the padding provided by scaffold
         modifier = Modifier.padding(paddingValues = padding),
         builder = {
-            // route : splash screen
+            // route : Splash screen
             composable("splashScreen") {
-                AnimatedSplashScreen(
-                    navController = navController,
-                    isShowBottomBar = isShowBottomBar
-                )
+                AnimatedSplashScreen(navController = navController)
             }
             // route : Home
             composable("home") {
                 HomeScreen(
                     activity = activity,
                     context = context,
-                    homeViewModel = homeViewModel
+                    homeViewModel = homeViewModel,
+                    isShowBottomBar = isShowBottomBar
                 )
             }
             // route : profile
@@ -192,27 +192,27 @@ private fun NavHostContainer(
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
     NavigationBar(
-        // set background color
+        // Set background color
         containerColor = NavigationBarDefaults.containerColor,
         contentColor = MaterialTheme.colorScheme.contentColorFor(containerColor),
         tonalElevation = NavigationBarDefaults.Elevation,
     ) {
-        // observe the backstack
+        // Observe the backstack
         val navBackStackEntry by navController.currentBackStackEntryAsState()
-        // observe current route to change the icon
-        // color,label color when navigated
+        // Observe current route to change the icon
+        // Color,label color when navigated
         val currentRoute = navBackStackEntry?.destination?.route
         // Bottom nav items we declared
         Constants.BottomNavItems.forEach { navItem ->
             // Place the bottom nav items
             NavigationBarItem(
-                // it currentRoute is equal then its selected route
+                // It currentRoute is equal then its selected route
                 selected = currentRoute == navItem.route,
-                // navigate on click
+                // Navigate on click
                 onClick = { navController.navigate(navItem.route) },
                 // Icon of navItem
                 icon = { Icon(imageVector = navItem.icon, contentDescription = navItem.label) },
-                // label
+                // Label
                 label = { Text(text = navItem.label) },
                 alwaysShowLabel = false
             )

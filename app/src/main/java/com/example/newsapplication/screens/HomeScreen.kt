@@ -21,8 +21,17 @@ import com.example.newsapplication.viewmodel.HomeViewModel
 // Markup of the "Home" screen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(activity: Activity, context: Context, homeViewModel: HomeViewModel) {
+fun HomeScreen(
+    activity: Activity,
+    context: Context,
+    homeViewModel: HomeViewModel,
+    isShowBottomBar: MutableState<Boolean>
+) {
+    // Text of notification
     val notificationText = remember { mutableStateOf("") }
+
+    // Show bottom bar back
+    isShowBottomBar.value = true
 
     // Column Composable,
     Column(
