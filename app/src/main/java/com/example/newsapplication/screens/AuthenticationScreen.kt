@@ -74,7 +74,7 @@ fun AuthenticationScreen(auth: FirebaseAuth, authenticationViewModel: Authentica
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Next
+                imeAction = ImeAction.Done
             )
         )
         // Registration button
