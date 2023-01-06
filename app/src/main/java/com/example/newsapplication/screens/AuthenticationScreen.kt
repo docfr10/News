@@ -1,13 +1,11 @@
 package com.example.newsapplication.screens
 
 import android.content.Context
+import android.os.Build
 import android.view.Window
-import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -23,6 +21,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import com.example.newsapplication.viewmodel.AuthenticationViewModel
 import com.google.firebase.auth.FirebaseAuth
 
+@RequiresApi(Build.VERSION_CODES.R)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AuthenticationScreen(
@@ -32,7 +31,7 @@ fun AuthenticationScreen(
     context: Context
 ) {
     // Raise the elements above the keyboard
-    window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE) // TODO - Fix
+    window.setDecorFitsSystemWindows(false)
 
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
@@ -40,7 +39,8 @@ fun AuthenticationScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background)
+            .imePadding(),
         // parameters set to place the items in center
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -79,7 +79,8 @@ fun AuthenticationScreen(
             onValueChange = { newText -> password.value = newText },
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background),
+                .background(MaterialTheme.colorScheme.background)
+                .imePadding(),
             label = { Text(text = "Password") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
