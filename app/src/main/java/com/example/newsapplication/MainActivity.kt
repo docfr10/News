@@ -1,7 +1,9 @@
 package com.example.newsapplication
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,8 +28,6 @@ import com.example.newsapplication.utils.Constants
 import com.example.newsapplication.viewmodel.AuthenticationViewModel
 import com.example.newsapplication.viewmodel.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
 class MainActivity : ComponentActivity() {
     // Objects for working with Firebase
@@ -50,9 +50,14 @@ class MainActivity : ComponentActivity() {
                 // Get recreated on recomposition
                 val navController = rememberNavController()
 
+                val activity = LocalContext.current as Activity
+                val context = LocalContext.current
+
                 if (cUser != null)
                 // Launch the app screen
                     AppScreen(
+                        activity = activity,
+                        context = context,
                         navController = navController,
                         auth = auth,
                         homeViewModel = homeViewModel,
@@ -60,6 +65,8 @@ class MainActivity : ComponentActivity() {
                 else
                 // Launch the authentication screen
                     Authentication(
+                        context = context,
+                        window = window,
                         navController = navController,
                         authenticationViewModel = authenticationViewModel,
                         auth = auth
@@ -74,7 +81,9 @@ class MainActivity : ComponentActivity() {
 private fun Authentication(
     navController: NavHostController,
     auth: FirebaseAuth,
-    authenticationViewModel: AuthenticationViewModel
+    authenticationViewModel: AuthenticationViewModel,
+    window: Window,
+    context: Context
 ) {
     BottomNavItemModel(
         label = "Authentication",
@@ -84,6 +93,8 @@ private fun Authentication(
     NavHost(navController = navController, startDestination = "authentication", builder = {
         composable("authentication") {
             AuthenticationScreen(
+                context = context,
+                window = window,
                 authenticationViewModel = authenticationViewModel,
                 auth = auth
             )
@@ -93,7 +104,13 @@ private fun Authentication(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppScreen(navController: NavHostController, auth: FirebaseAuth, homeViewModel: HomeViewModel) {
+fun AppScreen(
+    navController: NavHostController,
+    auth: FirebaseAuth,
+    homeViewModel: HomeViewModel,
+    activity: Activity,
+    context: Context
+) {
     // Hide bottom bar
     val isShowBottomBar = remember { mutableStateOf(false) }
 
@@ -104,6 +121,8 @@ fun AppScreen(navController: NavHostController, auth: FirebaseAuth, homeViewMode
             bottomBar = { if (isShowBottomBar.value) BottomNavigationBar(navController = navController) },
             content = { padding ->
                 NavHostContainer(
+                    activity = activity,
+                    context = context,
                     navController = navController,
                     padding = padding,
                     auth = auth,
@@ -126,11 +145,10 @@ private fun NavHostContainer(
     padding: PaddingValues,
     auth: FirebaseAuth,
     isShowBottomBar: MutableState<Boolean>,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    activity: Activity,
+    context: Context
 ) {
-    val activity = LocalContext.current as Activity
-    val context = LocalContext.current
-
     NavHost(
         navController = navController,
         // Set the start destination as splash screen

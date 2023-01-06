@@ -1,5 +1,8 @@
 package com.example.newsapplication.screens
 
+import android.content.Context
+import android.view.Window
+import android.view.WindowManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -23,11 +25,17 @@ import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthenticationScreen(auth: FirebaseAuth, authenticationViewModel: AuthenticationViewModel) {
+fun AuthenticationScreen(
+    auth: FirebaseAuth,
+    authenticationViewModel: AuthenticationViewModel,
+    window: Window,
+    context: Context
+) {
+    // Raise the elements above the keyboard
+    window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE) // TODO - Fix
+
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
-
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier
