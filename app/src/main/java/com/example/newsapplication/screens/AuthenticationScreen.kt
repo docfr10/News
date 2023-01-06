@@ -69,7 +69,9 @@ fun AuthenticationScreen(auth: FirebaseAuth, authenticationViewModel: Authentica
             value = password.value,
             textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface),
             onValueChange = { newText -> password.value = newText },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background),
             label = { Text(text = "Password") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
