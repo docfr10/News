@@ -10,8 +10,6 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.*
 import androidx.compose.material3.BottomAppBarDefaults.containerColor
 import androidx.compose.runtime.*
@@ -23,13 +21,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.newsapplication.model.navigationbar.BottomNavItemModel
 import com.example.newsapplication.screens.*
 import com.example.newsapplication.ui.theme.NewsApplicationTheme
 import com.example.newsapplication.utils.Constants
 import com.example.newsapplication.viewmodel.AuthenticationViewModel
 import com.example.newsapplication.viewmodel.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : ComponentActivity() {
     // Objects for working with Firebase
@@ -56,56 +54,22 @@ class MainActivity : ComponentActivity() {
                 val activity = LocalContext.current as Activity
                 val context = LocalContext.current
 
-                if (cUser != null)
-                // Launch the app screen
-                    AppScreen(
-                        activity = activity,
-                        context = context,
-                        navController = navController,
-                        auth = auth,
-                        homeViewModel = homeViewModel,
-                    )
-                else
-                // Launch the authentication screen
-                    Authentication(
-                        context = context,
-                        window = window,
-                        navController = navController,
-                        authenticationViewModel = authenticationViewModel,
-                        auth = auth
-                    )
+                AppScreen(
+                    activity = activity,
+                    context = context,
+                    cUser = cUser,
+                    navController = navController,
+                    auth = auth,
+                    authenticationViewModel = authenticationViewModel,
+                    homeViewModel = homeViewModel,
+                    window = window
+                )
             }
         }
     }
 }
 
-// Switching to the Authentication screen
 @RequiresApi(Build.VERSION_CODES.R)
-@Composable
-private fun Authentication(
-    navController: NavHostController,
-    auth: FirebaseAuth,
-    authenticationViewModel: AuthenticationViewModel,
-    window: Window,
-    context: Context
-) {
-    BottomNavItemModel(
-        label = "Authentication",
-        icon = Icons.Filled.AccountCircle,
-        route = "authentication"
-    )
-    NavHost(navController = navController, startDestination = "authentication", builder = {
-        composable("authentication") {
-            AuthenticationScreen(
-                context = context,
-                window = window,
-                authenticationViewModel = authenticationViewModel,
-                auth = auth
-            )
-        }
-    })
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScreen(
@@ -113,7 +77,10 @@ fun AppScreen(
     auth: FirebaseAuth,
     homeViewModel: HomeViewModel,
     activity: Activity,
-    context: Context
+    context: Context,
+    authenticationViewModel: AuthenticationViewModel,
+    window: Window,
+    cUser: FirebaseUser?
 ) {
     // Hide bottom bar
     val isShowBottomBar = remember { mutableStateOf(false) }
@@ -127,11 +94,14 @@ fun AppScreen(
                 NavHostContainer(
                     activity = activity,
                     context = context,
+                    cUser = cUser,
                     navController = navController,
                     padding = padding,
                     auth = auth,
+                    authenticationViewModel = authenticationViewModel,
                     homeViewModel = homeViewModel,
-                    isShowBottomBar = isShowBottomBar
+                    isShowBottomBar = isShowBottomBar,
+                    window = window
                 )
             }
         )
@@ -143,6 +113,7 @@ fun AppScreen(
 }
 
 // Screen Navigation
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
 private fun NavHostContainer(
     navController: NavHostController,
@@ -151,7 +122,10 @@ private fun NavHostContainer(
     isShowBottomBar: MutableState<Boolean>,
     homeViewModel: HomeViewModel,
     activity: Activity,
-    context: Context
+    context: Context,
+    window: Window,
+    authenticationViewModel: AuthenticationViewModel,
+    cUser: FirebaseUser?
 ) {
     NavHost(
         navController = navController,
@@ -162,7 +136,16 @@ private fun NavHostContainer(
         builder = {
             // route : Splash screen
             composable("splashScreen") {
-                AnimatedSplashScreen(navController = navController)
+                AnimatedSplashScreen(navController = navController, cUser = cUser)
+            }
+            // route : Authentication
+            composable("authentication") {
+                AuthenticationScreen(
+                    context = context,
+                    window = window,
+                    authenticationViewModel = authenticationViewModel,
+                    auth = auth
+                )
             }
             // route : Home
             composable("home") {

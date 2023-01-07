@@ -16,11 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.delay
 
 // Splash Screen
 @Composable
-fun AnimatedSplashScreen(navController: NavHostController) {
+fun AnimatedSplashScreen(navController: NavHostController, cUser: FirebaseUser?) {
     val startAnimation = remember { mutableStateOf(false) }
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnimation.value) 1f else 0f,
@@ -31,7 +32,10 @@ fun AnimatedSplashScreen(navController: NavHostController) {
         startAnimation.value = true
         delay(4000)
         navController.popBackStack()
-        navController.navigate("home")
+        if (cUser != null)
+            navController.navigate("home")
+        else
+            navController.navigate("authentication")
     }
     SplashScreen(alphaAnim = alphaAnim.value)
 }
