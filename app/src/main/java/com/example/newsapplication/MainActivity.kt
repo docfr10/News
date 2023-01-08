@@ -156,6 +156,10 @@ private fun NavHostContainer(
                     isShowBottomBar = isShowBottomBar
                 )
             }
+            // route : Work
+            composable("projects") {
+                ProjectsScreen()
+            }
             // route : Profile
             composable("profile") { ProfileScreen(auth = auth) }
             // route : About

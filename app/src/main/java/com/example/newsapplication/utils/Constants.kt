@@ -13,6 +13,11 @@ object Constants {
             route = "home"
         ),
         BottomNavItemModel(
+            label = "Projects",
+            icon = Icons.Filled.DateRange,
+            route = "projects"
+        ),
+        BottomNavItemModel(
             label = "Profile",
             icon = Icons.Filled.Person,
             route = "profile"
