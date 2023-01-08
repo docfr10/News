@@ -14,7 +14,7 @@ object Constants {
         ),
         BottomNavItemModel(
             label = "Projects",
-            icon = Icons.Filled.DateRange,
+            icon = Icons.Filled.Create,
             route = "projects"
         ),
         BottomNavItemModel(
