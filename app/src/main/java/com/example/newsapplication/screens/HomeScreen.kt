@@ -15,6 +15,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import com.example.newsapplication.viewmodel.HomeViewModel
 
 
@@ -37,7 +38,8 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background)
+            .padding(10.dp),
         // Parameters set to place the items in center
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -72,7 +74,7 @@ fun HomeScreen(
                 context = context,
                 notificationText = notificationText
             )
-        }) {
+        }, modifier = Modifier.padding(10.dp)) {
             Text(text = "Send notification")
         }
     }

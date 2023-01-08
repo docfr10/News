@@ -41,7 +41,6 @@ fun ProfileScreen(
             imageVector = Icons.Default.Person,
             contentDescription = "profile",
             tint = MaterialTheme.colorScheme.surfaceTint,
-            modifier = Modifier.size(64.dp)
         )
         // Text to Display the current Screen
         Text(text = "You are logged in as: ${cUser?.email}")
@@ -59,6 +58,6 @@ fun ProfileScreen(
                     context.startActivity(Intent(context, MainActivity::class.java))
                 }
             }
-        }) { Text(text = "Log out") }
+        }, modifier = Modifier.padding(5.dp)) { Text(text = "Log out") }
     }
 }
