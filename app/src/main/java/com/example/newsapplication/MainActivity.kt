@@ -84,12 +84,18 @@ fun AppScreen(
 ) {
     // Hide bottom bar
     val isShowBottomBar = remember { mutableStateOf(false) }
+    val isShowIconLabel = remember { mutableStateOf(true) }
 
     Surface(color = MaterialTheme.colorScheme.surface) {
         // Scaffold Component
         Scaffold(
             // Bottom navigation
-            bottomBar = { if (isShowBottomBar.value) BottomNavigationBar(navController = navController) },
+            bottomBar = {
+                if (isShowBottomBar.value) BottomNavigationBar(
+                    navController = navController,
+                    isShowIconLabel = isShowIconLabel
+                )
+            },
             content = { padding ->
                 NavHostContainer(
                     activity = activity,
@@ -101,6 +107,7 @@ fun AppScreen(
                     authenticationViewModel = authenticationViewModel,
                     homeViewModel = homeViewModel,
                     isShowBottomBar = isShowBottomBar,
+                    isShowIconLabel = isShowIconLabel,
                     window = window
                 )
             }
@@ -121,7 +128,8 @@ private fun NavHostContainer(
     context: Context,
     window: Window,
     authenticationViewModel: AuthenticationViewModel,
-    cUser: FirebaseUser?
+    cUser: FirebaseUser?,
+    isShowIconLabel: MutableState<Boolean>
 ) {
     NavHost(
         navController = navController,
@@ -155,21 +163,19 @@ private fun NavHostContainer(
                 )
             }
             // route : Work
-            composable("projects") {
-                ProjectsScreen()
-            }
+            composable("projects") { ProjectsScreen() }
             // route : Profile
             composable("profile") { ProfileScreen(auth = auth) }
             // route : About
             composable("about") { AboutScreen() }
             // route : Settings
-            composable("settings") { SettingsScreen() }
+            composable("settings") { SettingsScreen(isShowIconLabel = isShowIconLabel) }
         })
 }
 
 // Output of all screen icons
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
+fun BottomNavigationBar(navController: NavHostController, isShowIconLabel: MutableState<Boolean>) {
     NavigationBar(
         // Set background color
         containerColor = NavigationBarDefaults.containerColor,
@@ -193,7 +199,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                 icon = { Icon(imageVector = navItem.icon, contentDescription = navItem.label) },
                 // Label
                 label = { Text(text = navItem.label) },
-                alwaysShowLabel = false
+                alwaysShowLabel = isShowIconLabel.value
             )
         }
     }
