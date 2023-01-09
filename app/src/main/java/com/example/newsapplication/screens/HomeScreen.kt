@@ -2,6 +2,7 @@ package com.example.newsapplication.screens
 
 import android.app.*
 import android.content.Context
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.newsapplication.viewmodel.HomeViewModel
 
 
@@ -26,7 +28,8 @@ fun HomeScreen(
     activity: Activity,
     context: Context,
     homeViewModel: HomeViewModel,
-    isShowBottomBar: MutableState<Boolean>
+    isShowBottomBar: MutableState<Boolean>,
+    navController: NavHostController
 ) {
     // Text of notification
     val notificationText = remember { mutableStateOf("") }
@@ -76,6 +79,11 @@ fun HomeScreen(
             )
         }, modifier = Modifier.padding(10.dp)) {
             Text(text = "Send notification")
+        }
+        // TODO - FIX
+        BackHandler(enabled = true) {
+            navController.navigate("splashScreen") // ТО КУДА
+            isShowBottomBar.value = false
         }
     }
 }

@@ -106,10 +106,6 @@ fun AppScreen(
             }
         )
     }
-
-    // TODO - Fix
-    // Запрет возврата к экрану Аутентификации
-    //BackHandler(enabled = true) {}
 }
 
 // Screen Navigation
@@ -142,6 +138,7 @@ private fun NavHostContainer(
             composable("authentication") {
                 AuthenticationScreen(
                     context = context,
+                    navController = navController,
                     window = window,
                     authenticationViewModel = authenticationViewModel,
                     auth = auth
@@ -152,6 +149,7 @@ private fun NavHostContainer(
                 HomeScreen(
                     activity = activity,
                     context = context,
+                    navController = navController,
                     homeViewModel = homeViewModel,
                     isShowBottomBar = isShowBottomBar
                 )

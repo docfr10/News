@@ -3,6 +3,7 @@ package com.example.newsapplication.screens
 import android.content.Context
 import android.os.Build
 import android.view.Window
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.navigation.NavHostController
 import com.example.newsapplication.viewmodel.AuthenticationViewModel
 import com.google.firebase.auth.FirebaseAuth
 
@@ -28,7 +30,8 @@ fun AuthenticationScreen(
     auth: FirebaseAuth,
     authenticationViewModel: AuthenticationViewModel,
     window: Window,
-    context: Context
+    context: Context,
+    navController: NavHostController
 ) {
     // Raise the elements above the keyboard
     window.setDecorFitsSystemWindows(false)
@@ -110,6 +113,7 @@ fun AuthenticationScreen(
         }) { Text(text = "Sign in") }
     }
     // TODO - Fix
-    // Запрет возврата к экрану Аутентификации
-    //BackHandler(enabled = true) {}
+    BackHandler(enabled = true) {
+        navController.navigate("splashScreen") // ТО КУДА
+    }
 }
