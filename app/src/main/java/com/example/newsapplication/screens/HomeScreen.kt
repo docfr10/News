@@ -28,14 +28,10 @@ fun HomeScreen(
     activity: Activity,
     context: Context,
     homeViewModel: HomeViewModel,
-    isShowBottomBar: MutableState<Boolean>,
     navController: NavHostController
 ) {
     // Text of notification
     val notificationText = remember { mutableStateOf("") }
-
-    // Show bottom bar back
-    isShowBottomBar.value = true
 
     // Column Composable,
     Column(
@@ -83,7 +79,6 @@ fun HomeScreen(
         // TODO - FIX
         BackHandler(enabled = true) {
             navController.navigate("splashScreen") // ТО КУДА
-            isShowBottomBar.value = false
         }
     }
 }

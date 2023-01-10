@@ -82,8 +82,9 @@ fun AppScreen(
     window: Window,
     cUser: FirebaseUser?
 ) {
-    // Hide bottom bar
+    // Hiding the bottom bar
     val isShowBottomBar = remember { mutableStateOf(false) }
+    // Showing the icon label text
     val isShowIconLabel = remember { mutableStateOf(true) }
 
     Surface(color = MaterialTheme.colorScheme.surface) {
@@ -158,18 +159,30 @@ private fun NavHostContainer(
                     activity = activity,
                     context = context,
                     navController = navController,
-                    homeViewModel = homeViewModel,
-                    isShowBottomBar = isShowBottomBar
+                    homeViewModel = homeViewModel
                 )
+                isShowBottomBar.value = true
             }
             // route : Work
-            composable("projects") { ProjectsScreen() }
+            composable("projects") {
+                ProjectsScreen()
+                isShowBottomBar.value = true
+            }
             // route : Profile
-            composable("profile") { ProfileScreen(auth = auth) }
+            composable("profile") {
+                ProfileScreen(auth = auth)
+                isShowBottomBar.value = true
+            }
             // route : About
-            composable("about") { AboutScreen() }
+            composable("about") {
+                AboutScreen()
+                isShowBottomBar.value = true
+            }
             // route : Settings
-            composable("settings") { SettingsScreen(isShowIconLabel = isShowIconLabel) }
+            composable("settings") {
+                SettingsScreen(isShowIconLabel = isShowIconLabel)
+                isShowBottomBar.value = true
+            }
         })
 }
 
